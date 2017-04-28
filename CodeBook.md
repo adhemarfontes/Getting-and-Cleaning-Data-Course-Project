@@ -8,6 +8,9 @@ Contains a pair of key and label for each activity monitored
 * UCI HAR Dataset/test/y_test.txt
 Each line has one number that represents the activity used to collect the data in X_test.txt. Number of lines must match in this two files.
 
+* UCI HAR Dataset/test/subject_test.txt
+Each line has one number that represents the subject id used to collect the data in X_test.txt. Number of lines must match in this two files.
+
 * UCI HAR Dataset/test/X_test.txt
 Data collected for test purpose. Each line is a measurement containing 561 variables.
 
@@ -17,16 +20,19 @@ Each line has one number that represents the activity used to collect the data i
 * UCI HAR Dataset/train/X_train.txt
 Data collected for train purpose. Each line is a measurement containing 561 variables.
 
+* UCI HAR Dataset/train/subject_train.txt
+Each line has one number that represents the subject is used to collect the data in X_train.txt. Number of lines must match in this two files.
+
 * UCI HAR Dataset/features.txt
 Label for each of the 561 variables collected and represented in X_test.txt and X_train.txt.
 
 ## Transformation
 
-* Loaded "UCI HAR Dataset/test/X_test.txt" and added fixed 10 chars containg the word "TEST" and 20 chars containing the label for the rekated activity (match line position between X_test.txt and y_test.txt.
-* Loaded "UCI HAR Dataset/test/X_train.txt" and added fixed 10 chars containg the word "TRAIN" and 20 chars containing the label for the rekated activity (match line position between X_train.txt and y_train.txt.
+* Loaded "UCI HAR Dataset/test/X_test.txt" and added fixed 10 chars containg the correspondent subject and 20 chars containing the label for the related activity (match line position between X_test.txt, y_test.txt and subject_test.txt).
+* Loaded "UCI HAR Dataset/test/X_train.txt" and added fixed 10 chars containg the correspondent subject and 20 chars containing the label for the related activity (match line position between X_train.txt, y_train.txt and subject_train.txt).
 * Combined both files and save in merge.txt.
 * Selected the position of the variables for the measurements on the mean and standard deviation for each measurement.
-* Created a data frames copying 2 first columns: subject (TEST/TRAIN) and activity.
+* Created a data frames copying 2 first columns: subject id and activity.
 * Added to the data frame the values only for the variables on the mean and standard deviation for each measurement (based on the position).
 * Setted the column titles for the data frame.
 * Saved to merge.csv (preserving merge.txt).
@@ -39,11 +45,11 @@ Label for each of the 561 variables collected and represented in X_test.txt and 
 
 ## Output file average_vars.txt
 
-File containing the final tidy  dataset request by the project. Each row represents an unique combination of subject (TEST/TRAIN) and activity (LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS, WALKING_UPSTAIRS) and the variables 
+File containing the final tidy  dataset request by the project. Each row represents an unique combination of subject id and activity (LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS, WALKING_UPSTAIRS) and the variables 
 
 Below the classification columns:
 
-* Subject: TEST ou TRAIN
+* Subject: ID present on files subject_test.txt / subject_train.txt
 * Activity: LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS, WALKING_UPSTAIRS
 * Count: number of record in the original file for each combination of subject and activity
 
@@ -94,36 +100,23 @@ Below the data columns with the mean for each variable mean or std for each comb
 * fBodyAcc.std..X
 * fBodyAcc.std..Y
 * fBodyAcc.std..Z
-* fBodyAcc.meanFreq..X
-* fBodyAcc.meanFreq..Y
-* fBodyAcc.meanFreq..Z
 * fBodyAccJerk.mean..X
 * fBodyAccJerk.mean..Y
 * fBodyAccJerk.mean..Z
 * fBodyAccJerk.std..X
 * fBodyAccJerk.std..Y
 * fBodyAccJerk.std..Z
-* fBodyAccJerk.meanFreq..X
-* fBodyAccJerk.meanFreq..Y
-* fBodyAccJerk.meanFreq..Z
 * fBodyGyro.mean..X
 * fBodyGyro.mean..Y
 * fBodyGyro.mean..Z
 * fBodyGyro.std..X
 * fBodyGyro.std..Y
 * fBodyGyro.std..Z
-* fBodyGyro.meanFreq..X
-* fBodyGyro.meanFreq..Y
-* fBodyGyro.meanFreq..Z
 * fBodyAccMag.mean.
 * fBodyAccMag.std.
-* fBodyAccMag.meanFreq.
 * fBodyBodyAccJerkMag.mean.
 * fBodyBodyAccJerkMag.std.
-* fBodyBodyAccJerkMag.meanFreq.
 * fBodyBodyGyroMag.mean.
 * fBodyBodyGyroMag.std.
-* fBodyBodyGyroMag.meanFreq.
 * fBodyBodyGyroJerkMag.mean.
 * fBodyBodyGyroJerkMag.std.
-* fBodyBodyGyroJerkMag.meanFreq.

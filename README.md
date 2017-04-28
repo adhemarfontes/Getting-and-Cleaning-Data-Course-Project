@@ -3,7 +3,7 @@
 This project contains:
 * UCI HAR Dataset.zip - Original Samsung data used for the project
 * run_analysis.R - Script to transform the data
-* merge.csv - Tidy data set containing subject (TEST / TRAIN), activity and 561 variables os data
+* merge.csv - Tidy data set containing subject id, activity and 561 variables os data
 * average_vars.csv - Tidy data set with the average of each variable for each activity and each subject
 * CodeBook.md - a code book that describes the variables, the data, and any transformations or work that you performed to clean up
 
@@ -15,7 +15,7 @@ Script to transform the data with 4 functions
 Main function that calls three operation functions
 
 * mergeFiles
-Load train and test data, place 2 new columns subject (TEST ou TRAIN) and activity label, fill those columns for each row, merge data into merge.csv
+Load train and test data, place 2 new columns subject id (matching lines from files subject_test.txt / subject_train.txt) and activity label, fill those columns for each row, merge data into merge.csv
 
 * cleanDataset
 Load merge.csv, copy to a new data frame, extracting only the measurements on the mean and standard deviation for each measurement. Appropriately labels the data set with descriptive variable names. Save again as merge.txt.

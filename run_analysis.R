@@ -5,6 +5,7 @@ runScript <- function(){
 }  
 
 mergeFiles <- function(){
+  library(stringr)
   
   #load activity labels
   labels <- read.csv("./UCI HAR Dataset/activity_labels.txt", sep = " ", header = FALSE)  
@@ -21,6 +22,12 @@ mergeFiles <- function(){
   linetest_y=readLines(con) 
   close(con)
   
+  #load test subjects per line and set linetest_sub attribute
+  fileName="./UCI HAR Dataset/test/subject_test.txt"
+  con=file(fileName,open="r")
+  linetest_sub=readLines(con) 
+  close(con)
+  
   count_lines = length(linetest);
   print(count_lines)
   #go through test data and add correspondent activity label on beging of each line (fixed width of 20 chars)
@@ -28,7 +35,7 @@ mergeFiles <- function(){
     #add activity
     linetest[i] = paste( str_pad(labels[ labels$V1 == linetest_y[i],]$V2, 20, side="right", " ") , linetest[i], sep = "")
     #add subject
-    linetest[i] = paste( str_pad("TEST", 10, side="right", " ") , linetest[i], sep = "")
+    linetest[i] = paste( str_pad(linetest_sub[i], 10, side="right", " ") , linetest[i], sep = "")
   }
 
   #load train data and set linetrain attribute
@@ -43,6 +50,12 @@ mergeFiles <- function(){
   linetrain_y=readLines(con) 
   close(con)
   
+  #load train subjects per line and set linetrain_sub attribute
+  fileName="./UCI HAR Dataset/train/subject_train.txt"
+  con=file(fileName,open="r")
+  linetrain_sub=readLines(con) 
+  close(con)
+
   count_lines = length(linetrain);
   print(count_lines)
   #go through train data and add correspondent subject (test ou train) and activity label on beging of each line (fixed width of 20 chars)
@@ -50,7 +63,7 @@ mergeFiles <- function(){
     #add activity
     linetrain[i] = paste( str_pad(labels[ labels$V1 == linetrain_y[i],]$V2, 20, side="right", " ") , linetrain[i], sep = "")
     #add subject
-    linetrain[i] = paste( str_pad("TRAIN", 10, side="right", " ") , linetrain[i], sep = "")
+    linetrain[i] = paste( str_pad(linetrain_sub[i], 10, side="right", " ") , linetrain[i], sep = "")
   }
 
   #open file to save combined data
@@ -81,7 +94,8 @@ cleanDataset <- function(){
   meansandstd.idx = 1;
   for (i in 1:count_features){
     #only save attributes with mean and std on name
-    if ((grepl("mean()", features[i,2])) || (grepl("std()", features[i,2]))){
+    if ( ((length(grep("mean()", features[i,2], value = TRUE)) != 0 ) && (length(grep("meanFreq()", features[i,2], value = TRUE)) == 0 )) || 
+         (length(grep("std()", features[i,2], value = TRUE))  != 0)){
       meansandstd[meansandstd.idx] = i
       meansandstd.label[meansandstd.idx] = as.character(features[i,2])
       meansandstd.idx = meansandstd.idx + 1
